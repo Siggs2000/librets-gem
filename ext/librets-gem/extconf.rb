@@ -32,7 +32,7 @@ Dir.chdir(File.join(root, 'vendor')) do
         system "export PATH=$PATH:#{root}/bin"
         args = ["--prefix=#{root}",
                 "--with-boost-prefix=#{root}",
-                '--enable-shared_dependencies', '--enable-depends'
+                '--enable-shared_dependencies', '--enable-depends',
                 '--disable-java', '--disable-perl', '--disable-python']
         system './configure', *args
         system 'make'
