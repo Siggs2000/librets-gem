@@ -15,3 +15,13 @@ And then execute:
 Or install it yourself as:
 
     $ gem install librets-gem
+
+
+
+NOTES FOR MYSELF:
+
+You need to compile and install the filesystem and
+program options libraries.
+
+Boost.Filesystem
+Boost.ProgramOptions
