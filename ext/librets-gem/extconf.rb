@@ -46,7 +46,7 @@ Dir.chdir(File.join(root, 'vendor')) do
       #  system 'make clean'
 
 
-
+      end
 
     end
     #system "rm -f #{package}.tar"
