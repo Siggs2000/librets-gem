@@ -9,6 +9,6 @@ Gem::Specification.new do |gem|
   gem.description   = %q{LibRets RubyGem Wrapper}
   gem.summary       = %q{LibRets RubyGem Wrapper}
   gem.homepage      = "https://github.com/rew-ca/librets-gem"
-  gem.files         = ['lib/librets-gem.rb', 'lib/librets-gem/version.rb']
+  gem.files         = `git ls-files`.split($\)
   gem.extensions    = ['ext/librets-gem/extconf.rb']
 end

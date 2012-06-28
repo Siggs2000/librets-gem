@@ -1,11 +1,11 @@
-#require 'mkmf'
+require 'mkmf'
 
 root = File.expand_path('../../..', __FILE__)
 
 Dir.chdir(File.join(root, 'vendor')) do
   
   software = 'boost_1_49_0'
-  #system "bunzip2 #{software}.tar.bz2"
+  #system "bunzip2 -k #{software}.tar.bz2"
   #system "tar xvf #{software}.tar"
   #Dir.chdir(File.join(root, "vendor/#{software}")) do
   #  args = ["--prefix=#{root}", '--with-libraries=filesystem,program_options']
@@ -42,4 +42,4 @@ Dir.chdir(File.join(root, 'vendor')) do
   #system "rm -rf #{software}"  
 end
 
-#create_makefile 'librets-gem'
+create_makefile 'librets-gem'
