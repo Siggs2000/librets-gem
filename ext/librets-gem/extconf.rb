@@ -2,8 +2,8 @@ require 'mkmf'
 
 root = File.expand_path('../../..', __FILE__)
 
-Dir.chdir(File.join(root, 'vendor')) do
-  package = 'librets-1.5.3_libs.tar.gz'
+Dir.chdir root do
+  package = 'vendor/librets-1.5.3_libs.tar.gz'
   system "tar zxvf #{package}"
  
 #  ['boost_1_49_0', 'swig-2.0.7', 'librets-1.5.3'].each do |package|
