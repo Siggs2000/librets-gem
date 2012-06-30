@@ -3,7 +3,8 @@ require 'mkmf'
 root = File.expand_path('../../..', __FILE__)
 
 Dir.chdir root do
-  ['vendor/librets-1.5.3_libs.tar.gz', 'vendor/boost_1_49_0_libs.tar.gz'].each do |package|
+  #, 'vendor/boost_1_49_0_libs.tar.gz'
+  ['vendor/librets-1.5.3_libs.tar.gz'].each do |package|
     system "tar zxvf #{package}"
   end
  
