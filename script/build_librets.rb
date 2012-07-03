@@ -1,8 +1,5 @@
 #!/usr/bin/env ruby
 
-# Requires vulcan 0.8.0 from https://github.com/fredngo/vulcan 
-# or 0.8.1 from http://github.com/heroku/vulcan
-
 # Vulcan Command Line example
 #vulcan build --verbose --source=http://server.fredngo.net/boost_1_49_0.tar.gz --output=/tmp/boost_1_49_0.tar.gz --prefix=/tmp/boost_1_49_0 -c "cd boost_1_49_0 && ./bootstrap.sh --prefix=/tmp/boost_1_49_0 --with-libraries=filesystem,program_options && ./b2 install --prefix=/tmp/boost_1_49_0 threading=multi --layout=tagged --with-filesystem --with-program_options"
 
@@ -100,7 +97,7 @@ configure_args = ['LDFLAGS=-static',
   '--with-boost-prefix=$PWD/../../deps', 
   '--with-expat-prefix=$PWD/../../deps',
   '--enable-depends',
-  '--disable-java', '--disable-perl', '--disable-python'].join(' ')
+  '--disable-php', '--disable-dotnet', '--disable-java', '--disable-perl', '--disable-python'].join(' ')
         
 # Have to export SWIG_LIB for compilation to find the previously compiled swig
 # Need to insert a prefix with sed into the generated Makefile as the default /usr/local path is not writable on Heroku.
