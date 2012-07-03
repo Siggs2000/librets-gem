@@ -34,7 +34,8 @@ The important artifacts will be located at:
 ./versions/1.9.3-p194/lib/ruby/site_ruby/1.9.1/librets.rb
 ./versions/1.9.3-p194/lib/ruby/site_ruby/1.9.1/x86_64-darwin11.3.0/librets_native.bundle
 
-Optionally, mv build/swig/ruby/librets_native.bundle to inside gem
+mv build/swig/ruby/librets_native.bundle to /lib inside gem
+mv project/swig/ruby/librets.rb to /lib inside gem
 
 
 ## Build for Heroku:
@@ -46,4 +47,5 @@ or > 0.8.0 from http://github.com/heroku/vulcan (with fredngo's patch)
 
 Need to have ftp access to server.fredngo.net -- read the code.
 
-move the resulting librets
+move the built librets_native.so to /lib inside gem
+mv project/swig/ruby/librets.rb to /lib inside gem
