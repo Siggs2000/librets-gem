@@ -20,7 +20,9 @@ Or install it yourself as:
 
 ## Build librets on Mac OS X Lion
 
-You will need to install the custom homebrew formula in script/librets.rb
+You will need to install the custom homebrew formula in script/homebrw_formula/librets.rb, or maybe
+the latest homebrew already has fredngo's patch in it. Check to see if this pull request has been 
+honored -- https://github.com/mxcl/homebrew/pull/13191
 
 Then:
 
