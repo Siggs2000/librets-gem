@@ -21,7 +21,7 @@ Or install it yourself as:
 ## Build librets on Mac OS X Lion
 
 You will need to install the custom homebrew formula in script/homebrw_formula/librets.rb, or maybe
-the latest homebrew already has fredngo's patch in it. Check to see if this pull request has been 
+the latest homebrew already has fredngo's patch in it. Check to see if this pull request has been
 honored -- https://github.com/mxcl/homebrew/pull/13191
 
 Then:
@@ -42,10 +42,10 @@ mv project/swig/ruby/librets.rb to /lib inside gem
 
 Run script/build_librets.rb
 
-Requires vulcan 0.8.0 from https://github.com/fredngo/vulcan 
+Requires vulcan 0.8.0 from https://github.com/fredngo/vulcan
 or > 0.8.0 from http://github.com/heroku/vulcan (with fredngo's patch)
 
-Need to have ftp access to server.fredngo.net -- read the code.
+Need to have access to the rew-development-support S3 bucket -- look in script/build_librets.rb
 
 move the built librets_native.so to /lib inside gem
 mv project/swig/ruby/librets.rb to /lib inside gem
