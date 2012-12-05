@@ -14,7 +14,8 @@ system 'vulcan update'
 # Constants for Building Packages
 ##################################
 
-tarball_server = 'server.fredngo.net'
+# Upload files to the rew-development-support bucket
+tarball_server = 'rew-development-support.s3.amazonaws.com'
 prefix = '/tmp/usr/local'
 output_dir = '/tmp'
 
@@ -23,19 +24,19 @@ output_dir = '/tmp'
 ##############
 
 boost = 'boost_1_49_0'
-boost_libs = "#{boost}_libs"
+boost_compiled = "#{boost}_compiled"
 
 bootstrap_args = ["--prefix=#{prefix}", '--with-libraries=filesystem,program_options'].join(' ')
 
-b2_args = ['install', "cxxflags=-fPIC", "--prefix=#{prefix}", 'threading=multi', 'link=static', 'runtime-link=static', 
+b2_args = ['install', "cxxflags=-fPIC", "--prefix=#{prefix}", 'threading=multi', 'link=static', 'runtime-link=static',
            '--layout=tagged', '--with-filesystem', '--with-program_options'].join(' ')
 
-vulcan_args = ['build', '--verbose', "--source=http://#{tarball_server}/#{boost}.tar.gz", "--output=#{output_dir}/#{boost}_libs.tar.gz",
+vulcan_args = ['build', '--verbose', "--source=http://#{tarball_server}/#{boost}.tar.gz", "--output=#{output_dir}/#{boost}_compiled.tar.gz",
                "--prefix=#{prefix}", "-c", "cd #{boost} && ./bootstrap.sh #{bootstrap_args} && ./b2 #{b2_args}"]
-          
+
 system 'vulcan', *vulcan_args
 puts "*********************************************************************************************"
-puts "Now upload #{output_dir}/#{boost_libs}.tar.gz to http://#{tarball_server}/#{boost_libs}.tar.gz"
+puts "Now upload #{output_dir}/#{boost_compiled}.tar.gz to http://#{tarball_server}/#{boost_compiled}.tar.gz"
 puts "Press ENTER to continue..."
 puts "*********************************************************************************************"
 gets
@@ -45,19 +46,19 @@ gets
 ##############
 
 expat = 'expat-2.1.0'
-expat_libs = "#{expat}_libs"
+expat_compiled = "#{expat}_compiled"
 
 configure_args = ['LDFLAGS=-static', '--with-pic', "--prefix=#{prefix}"].join(' ')
 
 vulcan_args = [
-  'build', '--verbose', "--source=http://#{tarball_server}/#{expat}.tar.gz", "--output=#{output_dir}/#{expat}_libs.tar.gz",
+  'build', '--verbose', "--source=http://#{tarball_server}/#{expat}.tar.gz", "--output=#{output_dir}/#{expat}_compiled.tar.gz",
   "--prefix=#{prefix}", "-c", "cd #{expat} && \
    export CXX_FLAGS=-fPIC && export CFLAGS=-fPIC &&\
    ./configure #{configure_args} && make LDFLAGS=-all-static && make install"]
-          
+
 system 'vulcan', *vulcan_args
 puts "*********************************************************************************************"
-puts "Now upload #{output_dir}/#{expat_libs}.tar.gz to http://#{tarball_server}/#{expat_libs}.tar.gz"
+puts "Now upload #{output_dir}/#{expat_compiled}.tar.gz to http://#{tarball_server}/#{expat_compiled}.tar.gz"
 puts "Press ENTER to continue..."
 puts "*********************************************************************************************"
 gets
@@ -68,19 +69,19 @@ gets
 
 # Note this swig tarball is customized with a pcre tarball, so that we can run Tools/pcre-build.sh
 swig = 'swig-2.0.7-with-pcre-8.30'
-swig_libs = "#{swig}_libs"
+swig_compiled = "#{swig}_compiled"
 
 configure_args = ['LDFLAGS=-static', "--prefix=#{prefix}"].join(' ')
 
 vulcan_args = [
-  'build', '--verbose', "--source=http://#{tarball_server}/#{swig}.tar.gz", "--output=#{output_dir}/#{swig}_libs.tar.gz",
-  '-d', "#{tarball_server}/#{boost_libs}.tar.gz",
+  'build', '--verbose', "--source=http://#{tarball_server}/#{swig}.tar.gz", "--output=#{output_dir}/#{swig}_compiled.tar.gz",
+  '-d', "#{tarball_server}/#{boost_compiled}.tar.gz",
   "--prefix=#{prefix}", "-c", "cd #{swig} && Tools/pcre-build.sh && \
    ./configure #{configure_args} && make LDFLAGS=-all-static && make install"]
-          
+
 system 'vulcan', *vulcan_args
 puts "*********************************************************************************************"
-puts "Now upload #{output_dir}/#{swig_libs}.tar.gz to http://#{tarball_server}/#{swig_libs}.tar.gz"
+puts "Now upload #{output_dir}/#{swig_compiled}.tar.gz to http://#{tarball_server}/#{swig_compiled}.tar.gz"
 puts "Press ENTER to continue..."
 puts "*********************************************************************************************"
 gets
@@ -90,23 +91,23 @@ gets
 ################
 
 librets = 'librets-1.5.3'
-librets_libs = "#{librets}_libs"
+librets_compiled = "#{librets}_compiled"
 
-configure_args = ['LDFLAGS=-static', 
+configure_args = ['LDFLAGS=-static',
   "--prefix=#{prefix}",
-  '--with-boost-prefix=$PWD/../../deps', 
+  '--with-boost-prefix=$PWD/../../deps',
   '--with-expat-prefix=$PWD/../../deps',
   '--enable-depends',
   '--disable-php', '--disable-dotnet', '--disable-java', '--disable-perl', '--disable-python'].join(' ')
-        
+
 # Have to export SWIG_LIB for compilation to find the previously compiled swig
 # Need to insert a prefix with sed into the generated Makefile as the default /usr/local path is not writable on Heroku.
 vulcan_args = [
-  'build', '--verbose', "--source=http://#{tarball_server}/#{librets}.tar.gz", "--output=#{output_dir}/#{librets}_libs.tar.gz",
-  '-d', "#{tarball_server}/#{boost_libs}.tar.gz", "#{tarball_server}/#{swig_libs}.tar.gz", "#{tarball_server}/#{expat_libs}.tar.gz",
-  "--prefix=#{prefix}", "-c", 
+  'build', '--verbose', "--source=http://#{tarball_server}/#{librets}.tar.gz", "--output=#{output_dir}/#{librets}_compiled.tar.gz",
+  '-d', "#{tarball_server}/#{boost_compiled}.tar.gz", "#{tarball_server}/#{swig_compiled}.tar.gz", "#{tarball_server}/#{expat_compiled}.tar.gz",
+  "--prefix=#{prefix}", "-c",
   "export SWIG_LIB=\$PWD/../deps/share/swig/2.0.7 && \
-  ln -s \$PWD/../deps/lib/libboost_program_options-mt-s.a \$PWD/../deps/lib/libboost_program_options.a && \ 
+  ln -s \$PWD/../deps/lib/libboost_program_options-mt-s.a \$PWD/../deps/lib/libboost_program_options.a && \
   ln -s \$PWD/../deps/lib/libboost_filesystem-mt-s.a \$PWD/../deps/lib/libboost_filesystem.a && \
   ln -s \$PWD/../deps/lib/libboost_system-mt-s.a \$PWD/../deps/lib/libboost_system.a && \
   cd #{librets} && \
@@ -125,10 +126,10 @@ vulcan_args = [
   mv #{prefix}/lib/ruby/site_ruby/1.9.1/x86_64-linux/librets_native.so #{prefix}/lib && \
   mv #{prefix}/lib/ruby/site_ruby/1.9.1/librets.rb #{prefix}/lib && \
   rm -rf #{prefix}/lib/ruby"]
-     
+
 system 'vulcan', *vulcan_args
 puts "*********************************************************************************************"
-puts "Now upload #{output_dir}/#{librets_libs}.tar.gz to http://#{tarball_server}/#{librets_libs}.tar.gz"
+puts "Now upload #{output_dir}/#{librets_compiled}.tar.gz to http://#{tarball_server}/#{librets_compiled}.tar.gz"
 puts "Press ENTER to continue..."
 puts "*********************************************************************************************"
 gets
