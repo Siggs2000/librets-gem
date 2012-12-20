@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.name          = "librets-gem"
   gem.version       = LibretsGem::VERSION
   gem.authors       = ["Fred Ngo"]
-  gem.email         = ["fngo@rew.ca"]
+  gem.email         = ["fredngo.rew@gmail.com"]
   gem.description   = %q{LibRets RubyGem Wrapper}
   gem.summary       = %q{LibRets RubyGem Wrapper}
   gem.homepage      = "https://github.com/rew-ca/librets-gem"
