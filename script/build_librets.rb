@@ -15,7 +15,7 @@ system 'vulcan update'
 ##################################
 
 # Upload files to the rew-development-support bucket
-tarball_server = 'rew-development-support.s3.amazonaws.com/librets-gem'
+tarball_server = 'seth_librets.s3.amazonaws.com/librets-gem'
 prefix = '/tmp/usr/local'
 output_dir = '/tmp'
 
